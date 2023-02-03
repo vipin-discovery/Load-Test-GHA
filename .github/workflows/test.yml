@@ -7,47 +7,36 @@ on:
         description: 'target environment'
         required: true
         default: 'github'
-        type: choice
+        type: string
         options:
         - github
         - aws
         - azure
       host:
         required: true
+        type: string
         options:
           - https://prod.playback.h264.io
         default: "https://prod.playback.h264.io"
         description: "Host"
       endpoint:
         required: true
+        type: string
         default: "integration"
         description: "endpoint"
       users:
         required: true
-        type: choice
-        options:
-          - "1000"
-          - "5000"
-          - "10000"
+        type: string
         default: "5"
         description: "Number of users"
       spawn-rate:
         description: "spawn-rate"
-        type: choice
-        options:
-          - "1"
-          - "2"
-          - "5"
+        type: string
         required: true
         default: "5"
       run-time:
         description: 'run-time'
-        type: choice
-        options:
-          - "5s"
-          - "10s"
-          - "30s"
-          - "60s"
+        type: string
         required: true
         default: "10s"
     push:
@@ -63,7 +52,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
       - name: Run Load Test
-        uses: vipin-discovery/load-test-pipeline@dev1
+        uses: vipin-discovery/load-test-pipeline@master
         with:
           LOCUSTFILE: "locustfile.py"
           URL:  "https://prod.playback.h264.io"

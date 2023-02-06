@@ -17,9 +17,6 @@ on:
         pattern:
           - ^.{15,50}$
           - Must have at least 15 characters
-        options:
-          - https://prod.playback.h264.io
-        default: https://prod.playback.h264.io
         description: Host
       endpoint:
         required: true

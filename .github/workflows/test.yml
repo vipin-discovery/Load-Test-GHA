@@ -1,50 +1,51 @@
 name: Running Locust Load Test
-
 on:
   workflow_dispatch:
     inputs:
       platform:
-        description: 'target environment'
+        description: target environment
         required: true
-        default: 'github'
+        default: github
         type: string
         options:
-        - github
-        - aws
-        - azure
+          - github
+          - aws
+          - azure
       host:
         required: true
         type: string
+        pattern:
+          - ^.{15,50}$
+          - Must have at least 15 characters
         options:
           - https://prod.playback.h264.io
-        default: "https://prod.playback.h264.io"
-        description: "Host"
+        default: https://prod.playback.h264.io
+        description: Host
       endpoint:
         required: true
         type: string
-        default: "integration"
-        description: "endpoint"
+        default: integration
+        description: endpoint
       users:
         required: true
         type: string
         default: "5"
-        description: "Number of users"
+        description: Number of users
       spawn-rate:
-        description: "spawn-rate"
+        description: spawn-rate
         type: string
         required: true
         default: "5"
       run-time:
-        description: 'run-time'
+        description: run-time
         type: string
         required: true
-        default: "10s"
+        default: 10s
     push:
       branches:
-      - main
-      - test
-      - dev 
-
+        - main
+        - test
+        - dev
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -54,9 +55,10 @@ jobs:
       - name: Run Load Test
         uses: vipin-discovery/Load-Test-GHA@master
         with:
-          LOCUSTFILE: "locustfile.py"
-          URL:  "https://prod.playback.h264.io"
+          LOCUSTFILE: ${ secrets.locustfile.py }
+          URL: ${ secrets.URL }
           USERS: ${{ github.event.inputs.users }}
           RATE: ${{ github.event.inputs.spawn-rate }}
           RUNTIME: ${{ github.event.inputs.run-time }}
+
           
